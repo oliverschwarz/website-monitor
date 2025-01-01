@@ -27,7 +27,7 @@ foreach($monitors as $name => $url) {
 	curl_setopt($curl, CURLOPT_HEADER, true);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 	$response = curl_exec($curl);
-	if(curl_exec($curl) === false) {
+	if($response === false) {
 		$response_data[$timestamp]['error'] = curl_error($curl);
 	}
 	else {
@@ -37,7 +37,7 @@ foreach($monitors as $name => $url) {
 		$response_data[$timestamp]['time'] = $ms;
 		$response_data[$timestamp]['response'] = $http_code;
 	}
-	
+
 	curl_close($curl);
 	if(file_exists(PATH.'/monitors/'.$name)) {
 		$data = json_decode(file_get_contents(PATH.'/monitors/'.$name), TRUE);
